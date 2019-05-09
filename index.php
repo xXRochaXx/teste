@@ -10,7 +10,7 @@ if(!file_exists('vendor/autoload.php')) {
 require_once 'vendor/autoload.php';
 
 if(empty($_GET)) {
-    header('Location: ?path=agenda');
+    header('Location: ?path=inicio');
 }
 ?>
 
@@ -27,6 +27,7 @@ if(empty($_GET)) {
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
 <body>
+
 <nav class="navbar navbar-dark bg-dark">
   <a class="navbar-brand" href="index.php">Agenda</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="true" aria-label="Toggle navigation">

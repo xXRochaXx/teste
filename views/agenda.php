@@ -37,7 +37,7 @@ $urgenciasAll  = Urgencia::getInstance()->order('id')->getAll();
 $tendenciasAll = Tendencia::getInstance()->order('id')->getAll();
 
 ?>
-
+<div class="container-fluid">
 <table class="table table-striped">
   <thead class="thead-dark">
     <tr>
@@ -192,6 +192,7 @@ $tendenciasAll = Tendencia::getInstance()->order('id')->getAll();
     <?php endforeach; ?>
   </tbody>
 </table>
+</div>
 
 <!-- class="table-default"> -->
 <!-- class="table-secondary"> -->

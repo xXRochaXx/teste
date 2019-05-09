@@ -32,3 +32,9 @@ table.table tr > *.table-danger {
 table#melhorias {
     width: initial;
 }
+
+div.separador-texto-combos {
+    text-align: center;
+    vertical-align: bottom;
+    padding: 0.75rem 0.75rem;
+}
