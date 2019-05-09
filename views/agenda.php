@@ -55,15 +55,6 @@ $tendenciasAll = Tendencia::getInstance()->order('id')->getAll();
           <td>
             <table id="melhorias" class="table">
               <thead>
-                <?php foreach($melhorias as $melhoria) : ?>
-                  <tr>
-                    <?php foreach($urgencias as $urgencia) : ?>
-                      <?php if($melhoria->urgencia == $urgencia->id && $melhoria->area == $area->id) : ?>
-                        <th scope="col"></th>
-                      <?php endif; ?>
-                    <?php endforeach; ?>
-                  </tr>
-                <?php endforeach; ?>
               </thead>
               <tbody>
                 <?php 

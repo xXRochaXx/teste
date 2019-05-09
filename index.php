@@ -45,7 +45,7 @@ if(empty($_GET)) {
     </ul>
   </div>
 </nav>
-<div class="position-relative">
+<div class="position-relative" style="margin-top: 20px">
     <?php
         if(!empty($_GET['path'])) {
             require_once ('views/'. $_GET['path'] . '.php');
