@@ -15,6 +15,7 @@ CREATE TABLE config.gravidade (
     id  serial primary key,
     descricao varchar(250)
 );
+
 INSERT INTO config.gravidade (descricao) VALUES ('Sem gravidade'), ('Pouco grave'), ('Grave'), ('Muito grave'), ('Extremamente grave');
 
 CREATE TABLE config.urgencia (
@@ -37,7 +38,7 @@ CREATE TABLE area (
 CREATE TABLE melhorias (
     id  serial primary key,
     tarefa varchar(250),
-   descricao text not null,
+    descricao text not null,
     redmine integer,
     ticket integer,
     demanda_legal boolean not null default false,
@@ -49,6 +50,7 @@ CREATE TABLE melhorias (
     area int8 NOT NULL,
     entrega_em integer NOT NULL default extract(month from current_date)
 );
+
 ALTER TABLE melhorias ADD CONSTRAINT melhoria_gravidade_fk FOREIGN KEY (gravidade) REFERENCES config.gravidade (id);
 ALTER TABLE melhorias ADD CONSTRAINT melhoria_urgencia_fk FOREIGN KEY (urgencia) REFERENCES config.urgencia (id);
 ALTER TABLE melhorias ADD CONSTRAINT melhoria_tendencia_fk FOREIGN KEY (tendencia) REFERENCES config.tendencia (id);
