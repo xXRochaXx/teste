@@ -16,10 +16,10 @@ for($m = $mInicial; $m <= $mFinal; $m++) {
 }
 
 ?>
-<div class="container">
-  <form>
+<div class="container" id="agenda">
+  <form class="col-sm-12 col-md-6">
     <div class="form-row">
-      <div class="form-group col-md-7">
+      <div class="form-group col-sm-12">
         <label for="area">Áreas</label>
         <select class="form-control" id="area">
           <option value="0">Selecione</option>
@@ -31,7 +31,7 @@ for($m = $mInicial; $m <= $mFinal; $m++) {
       </div>
     </div>
     <div class="form-row">
-      <div class="form-group col-md-3">
+      <div class="form-group col-sm-12 col-md-5">
         <label for="mes_inicio">Período</label>
         <select class="form-control" id="mes_inicio">
           <option value="0">Selecione</option>
@@ -40,11 +40,11 @@ for($m = $mInicial; $m <= $mFinal; $m++) {
           <?php endforeach; ?>
         </select>
       </div>
-      <div class="form-group col-md-1">
+      <div class="form-group col-sm-12 col-md-2">
         <div>&nbsp;</div>
         <div class="separador-texto-combos">à</div>
       </div>
-      <div class="form-group col-md-3">
+      <div class="form-group col-sm-12 col-md-5">
         <label for="mes_fim">&nbsp;</label>
         <select class="form-control" id="mes_fim">
           <option value="0">Selecione</option>
@@ -54,11 +54,11 @@ for($m = $mInicial; $m <= $mFinal; $m++) {
         </select>
       </div>
     </div>
-    <button type="button" id="btn-buscar" class="btn btn-primary">Buscar</button>
+    <button type="button" id="btn_buscar" class="btn btn-primary">Buscar</button>
   </form>
 </div>
 <script type="text/javascript">
-  document.querySelector('#btn-buscar').addEventListener('click', function(ev) {
+  document.querySelector('#btn_buscar').addEventListener('click', function(ev) {
 
     var form        = document.querySelector('form');
     var fields      = form.elements;

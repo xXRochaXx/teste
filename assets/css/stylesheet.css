@@ -38,3 +38,12 @@ div.separador-texto-combos {
     vertical-align: bottom;
     padding: 0.75rem 0.75rem;
 }
+
+div#agenda form {
+    margin: 50px auto 0 auto;
+}
+
+div#agenda form > button#btn_buscar {
+    margin: 0 auto;
+    display: block;
+}
