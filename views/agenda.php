@@ -106,32 +106,24 @@ $tendenciasAll = Tendencia::getInstance()->order('id')->getAll();
                                           </div>
                                           <div class="modal-body">
                                             <form>
-                                              <div class="form-row align-items-center">
-                                                <div class="col">
+                                              <div class="form-group">
                                                   <label class="" for="descricao">Descrição</label>
                                                   <textarea class="form-control mb-2" id="descricao" rows="8" readonly><?php echo $melhoria->descricao ?></textarea>
-                                                </div>
                                               </div>
-                                              <div class="form-row align-items-center">
+                                              <div class="form-group form-row">
                                                 <div class="col">
-                                                  <label class="" for="prazo_legal">Prazo legal</label>
+                                                  <label  for="prazo_legal">Prazo legal</label>
                                                   <input type="text" class="form-control mb-2" id="prazo_legal" placeholder="Prazo legal" readonly value="<?php echo $prazoLegal ?>">
                                                 </div>
                                                 <div class="col">
-                                                  <label class="" for="prazo_acordado">Prazo acordado</label>
+                                                  <label for="prazo_acordado">Prazo acordado</label>
                                                   <input type="text" class="form-control" id="prazo_acordado" placeholder="Prazo acordado" readonly value="<?php echo $prazoAcordado ?>">
                                                 </div>
-                                                <div class="col">
-                                                  <div class="form-check mb-2">
-                                                    <input class="form-check-input" type="checkbox" id="demanda_legal" readonly <?php echo $demandaLegal ? 'checked' : '' ?>>
-                                                    <label class="form-check-label" for="demanda_legal">Demanda Legal</label>
-                                                  </div>
-                                                </div>
                                               </div>
-                                              <div class="form-row align-items-center">
+                                              <div class="form-group form-row">
                                                 <div class="col">
-                                                  <label class="" for="gravidade">Gravidade</label>
-                                                  <select id="gravidade">
+                                                  <label for="gravidade">Gravidade</label>
+                                                  <select class="form-control" id="gravidade">
                                                     <?php foreach ($gravidadesAll as $gravidade) : ?>
                                                       <option value='0'>Não informado</option>
                                                       <option <?php echo $gravidade->id == $melhoria->gravidade ? 'selected' : '' ?> value="<?php echo $gravidade->id ?>"><?php echo $gravidade->descricao ?></option>
@@ -139,22 +131,29 @@ $tendenciasAll = Tendencia::getInstance()->order('id')->getAll();
                                                   </select>
                                                 </div>
                                                 <div class="col">
-                                                  <label class="" for="urgencia">Urgência</label>
-                                                  <select id="urgencia">
+                                                  <label for="urgencia">Urgência</label>
+                                                  <select class="form-control" id="urgencia">
                                                     <?php foreach ($urgenciasAll as $urgencia) : ?>
                                                       <option value='0'>Não informado</option>
                                                       <option <?php echo $urgencia->id == $melhoria->urgencia ? 'selected' : '' ?> value="<?php echo $urgencia->id ?>"><?php echo $urgencia->descricao ?></option>
                                                     <?php endforeach; ?>
                                                   </select>
                                                 </div>
+                                              </div>
+                                              <div class="form-group form-row">  
                                                 <div class="col">
-                                                  <label class="" for="tendencia">Tendência</label>
-                                                  <select id="tendencia">
+                                                  <select class="form-control" id="tendencia">
                                                     <?php foreach ($tendenciasAll as $tendencia) : ?>
                                                       <option value='0'>Não informado</option>
                                                       <option <?php echo $tendencia->id == $melhoria->tendencia ? 'selected' : '' ?> value="<?php echo $tendencia->id ?>"><?php echo $tendencia->descricao ?></option>
                                                     <?php endforeach; ?>
                                                   </select>
+                                                </div>
+                                                <div class="col">
+                                                  <div class="form-check mb-2">
+                                                    <input class="form-check-input" type="checkbox" id="demanda_legal" readonly <?php echo $demandaLegal ? 'checked' : '' ?>>
+                                                    <label class="form-check-label" for="demanda_legal">Demanda Legal</label>
+                                                  </div>
                                                 </div>
                                               </div>
                                             </form>
