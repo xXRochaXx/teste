@@ -133,6 +133,7 @@ $tendenciasAll = Tendencia::getInstance()->order('id')->getAll();
                                                   <label class="" for="gravidade">Gravidade</label>
                                                   <select id="gravidade">
                                                     <?php foreach ($gravidadesAll as $gravidade) : ?>
+                                                      <option value='0'>Não informado</option>
                                                       <option <?php echo $gravidade->id == $melhoria->gravidade ? 'selected' : '' ?> value="<?php echo $gravidade->id ?>"><?php echo $gravidade->descricao ?></option>
                                                     <?php endforeach; ?>
                                                   </select>
@@ -141,6 +142,7 @@ $tendenciasAll = Tendencia::getInstance()->order('id')->getAll();
                                                   <label class="" for="urgencia">Urgência</label>
                                                   <select id="urgencia">
                                                     <?php foreach ($urgenciasAll as $urgencia) : ?>
+                                                      <option value='0'>Não informado</option>
                                                       <option <?php echo $urgencia->id == $melhoria->urgencia ? 'selected' : '' ?> value="<?php echo $urgencia->id ?>"><?php echo $urgencia->descricao ?></option>
                                                     <?php endforeach; ?>
                                                   </select>
@@ -149,6 +151,7 @@ $tendenciasAll = Tendencia::getInstance()->order('id')->getAll();
                                                   <label class="" for="tendencia">Tendência</label>
                                                   <select id="tendencia">
                                                     <?php foreach ($tendenciasAll as $tendencia) : ?>
+                                                      <option value='0'>Não informado</option>
                                                       <option <?php echo $tendencia->id == $melhoria->tendencia ? 'selected' : '' ?> value="<?php echo $tendencia->id ?>"><?php echo $tendencia->descricao ?></option>
                                                     <?php endforeach; ?>
                                                   </select>
