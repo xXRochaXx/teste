@@ -91,9 +91,6 @@ $tendenciasAll = Tendencia::getInstance()->order('id')->getAll();
                                         <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#melhoria_<?php echo $melhoria->id ?>">
                                           <i class="fas fa-plus"></i>
                                         </a>
-                                        <?php if(!empty($melhoria->redmine)) : ?>
-                                          <a target="_blank" href="http://redmine.dbseller.com.br/issues/<?php echo $melhoria->redmine ?>" class="btn btn-primary"><?php echo $melhoria->redmine ?></a>
-                                        <?php endif; ?>
                                       </div>
                                     </div>
 
