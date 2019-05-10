@@ -1,6 +1,14 @@
 \c melhorias
 
-\i seeds/areas.sql
+INSERT INTO area (descricao) VALUES 
+     ('Configurações')
+    ,('Educação')
+    ,('Financeiro')
+    ,('Patrimonial')
+    ,('Saúde')
+    ,('Tributário')
+    ,('Folha')
+;
 
 INSERT INTO melhorias (area, descricao, prazo_acordado, prazo_legal, demanda_legal, gravidade, urgencia, tendencia) VALUES 
     ((SELECT id FROM area WHERE descricao ilike 'Tributário'),     '', '2019-12-31', null,         'f', null, 1, null),
