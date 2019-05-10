@@ -39,16 +39,13 @@ CREATE TABLE melhorias (
     id  serial primary key,
     tarefa varchar(250),
     descricao text not null,
-    redmine integer,
-    ticket integer,
     demanda_legal boolean not null default false,
     prazo_acordado date,
     prazo_legal date,
     gravidade int8,
     urgencia int8, 
     tendencia int8,
-    area int8 NOT NULL,
-    entrega_em integer NOT NULL default extract(month from current_date)
+    area int8 NOT NULL
 );
 
 ALTER TABLE melhorias ADD CONSTRAINT melhoria_gravidade_fk FOREIGN KEY (gravidade) REFERENCES config.gravidade (id);
