@@ -19,3 +19,6 @@ docker exec -it <container-name> bash
 chmod +x composer
 php composer install
 ```
+
+#### Correções de bugs e melhorias
+Você deve criar um merge request com sua correção.
