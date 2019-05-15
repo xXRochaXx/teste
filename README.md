@@ -21,4 +21,5 @@ php composer install
 ```
 
 #### Correções de bugs e melhorias
-Você deve criar um merge request com sua correção.
+~~*Você deve criar um merge request com sua correção.*~~
+Crie um fork do projeto com as suas correções
