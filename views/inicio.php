@@ -2,13 +2,10 @@
 
 use DAO\Area;
 
-$mInicial = (int)date('m');
-$mFinal   = 12;
-
 $areas = Area::getInstance()->order('descricao')->getAll();
 $meses = [];
 
-for($m = $mInicial; $m <= $mFinal; $m++) {
+for($m = 1; $m <= 12; $m++) {
   $meses[] = (object)[
     'id'         => $m,
     'descricao'  => date('F', mktime(0, 0, 0, $m)),
@@ -68,7 +65,7 @@ for($m = $mInicial; $m <= $mFinal; $m++) {
     for(let field of fields) {
 
       if(field.value > 0) {
-        
+
         switch(field.id) {
           case 'area':
 
@@ -77,7 +74,7 @@ for($m = $mInicial; $m <= $mFinal; $m++) {
             qryString += '=';
             qryString += field.value;
             break;
-          
+
           case 'mes_inicio':
           case 'mes_fim':
             filtroMeses.push(field.value);

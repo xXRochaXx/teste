@@ -6,8 +6,7 @@ use DAO\Gravidade;
 use DAO\Tendencia;
 use DAO\Melhoria;
 
-$mInicial = (int)date('m');
-$mFinal   = $mInicial + 2;
+$mInicial = 1;
 $mFinal   = 12;
 
 if(!empty($_GET['meses'])) {
@@ -24,17 +23,17 @@ if(!empty($_GET['area'])) {
   $areas = Area::getInstance()->getAll();
 }
 
-$urgenciasSelecionadas = '5,4';
-if(!empty($_GET['urgencias'])) {
-  $urgenciasSelecionadas = implode(',', explode('-', $_GET['urgencias']));
-}
-
-$urgencias = Urgencia::getInstance()->order('id', 'desc')->getAll(3);
-$melhoriasAgenda = Melhoria::getInstance()->order('prazo_legal')->order('prazo_acordado')->order('gut', 'desc')->order('id')->filtrarPorUrgencia([$urgenciasSelecionadas], ['*', '(coalesce(gravidade, 1) * coalesce(urgencia, 1) * coalesce(tendencia, 1)) as gut']);
-
 $gravidadesAll = Gravidade::getInstance()->order('id')->getAll();
 $urgenciasAll  = Urgencia::getInstance()->order('id')->getAll();
 $tendenciasAll = Tendencia::getInstance()->order('id')->getAll();
+
+$urgencias = Urgencia::getInstance()->order('id', 'desc')->getAll(3);
+$melhoriasAgenda = Melhoria::getInstance()
+    ->order('prazo_legal')
+    ->order('prazo_acordado')
+    ->order('gut', 'desc')
+    ->order('id')
+    ->filtrarPorUrgencia([0,1,2,3,4], ['*', '(coalesce(gravidade, 1) * coalesce(urgencia, 1) * coalesce(tendencia, 1)) as gut']);
 
 $melhorias = [];
 
@@ -45,7 +44,7 @@ foreach($melhoriasAgenda as $melhoriaAgenda) {
       list($anoPrazoLegal, $mesPrazoLegal, $diaPrazoLegal) = explode('-', $melhoriaAgenda->prazo_legal);
       $prazoLegal = date('d/m/Y', mktime(0,0,0, $mesPrazoLegal, $diaPrazoLegal, $anoPrazoLegal));
     }
-      
+
     $prazoAcordado = '';
     if (!empty($melhoriaAgenda->prazo_acordado)) {
       list($anoPrazoAcordado, $mesPrazoAcordado, $diaPrazoAcordado) = explode('-', $melhoriaAgenda->prazo_acordado);
@@ -58,7 +57,7 @@ foreach($melhoriasAgenda as $melhoriaAgenda) {
       $mesEntregaMelhoria = preg_replace('/\d{4}-(\d{2})-\d{2}/', "$1", $melhoriaAgenda->prazo_acordado);
     }
     $mesEntregaMelhoria = (int)$mesEntregaMelhoria;
-  
+
     $melhoriaAgenda->title      = preg_replace('/([^ ]+ +[^ ]+ +[^ ]+ +).*/', "$1", $melhoriaAgenda->tarefa);
     $melhoriaAgenda->entrega_em = $mesEntregaMelhoria;
     $melhoriaAgenda->prazoLegal    = $prazoLegal;
@@ -151,7 +150,7 @@ foreach($melhoriasAgenda as $melhoriaAgenda) {
                                                   </select>
                                                 </div>
                                               </div>
-                                              <div class="form-group form-row">  
+                                              <div class="form-group form-row">
                                                 <div class="col">
                                                   <label for="tendencia">Tendência</label>
                                                   <select class="form-control" id="tendencia">
@@ -169,7 +168,7 @@ foreach($melhoriasAgenda as $melhoriaAgenda) {
                                                 </div>
                                               </div>
                                             </form>
-                                            
+
                                           </div>
                                           <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
