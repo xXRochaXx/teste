@@ -18,7 +18,7 @@ class Database {
      */
     protected static  $oInstance;
 
-    public function __construct ($dbname = 'melhorias', $host = 'calendariomelhorias_database_1', $port = '5432', $user = 'postgres', $pass = '') 
+    public function __construct ($dbname = 'melhorias', $host = 'dbsellerdb', $port = '5432', $user = 'postgres', $pass = '') 
     {
         $dsn = "pgsql:dbname={$dbname};host={$host};port={$port}";
         
