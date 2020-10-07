@@ -11,6 +11,7 @@ docker exec -it dbsellerdb bash
 cd /home
 psql -U postgres -f database.sql
 psql -U postgres -f seeds/seeds.sql
+exit
 ```
 
 ## Instalando dependências
@@ -18,6 +19,7 @@ psql -U postgres -f seeds/seeds.sql
 docker exec -it dbsellerphp bash
 chmod +x composer
 php composer install
+exit
 ```
 
 #### Correções de bugs e melhorias
