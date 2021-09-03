@@ -53,3 +53,4 @@ ALTER TABLE melhorias ADD CONSTRAINT melhoria_urgencia_fk FOREIGN KEY (urgencia)
 ALTER TABLE melhorias ADD CONSTRAINT melhoria_tendencia_fk FOREIGN KEY (tendencia) REFERENCES config.tendencia (id);
 ALTER TABLE melhorias ADD CONSTRAINT melhoria_area_fk FOREIGN KEY (area) references area (id);
 
+

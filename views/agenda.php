@@ -1,70 +1,39 @@
 <?php
+require_once 'melhoriasNegocios.php';
 
-use DAO\Area;
-use DAO\Urgencia;
 use DAO\Gravidade;
-use DAO\Tendencia;
 use DAO\Melhoria;
-
-$mInicial = 1;
-$mFinal   = 12;
-
-if(!empty($_GET['meses'])) {
-  if(strpos($_GET['meses'], '-') !== false ) {
-    list($mInicial, $mFinal) = explode('-', $_GET['meses']);
-  } else {
-    $mInicial = $mFinal = $_GET['meses'];
-  }
-}
-
-if(!empty($_GET['area'])) {
-  $areas[] = Area::getInstance()->filtrarPorId($_GET['area']);
-} else {
-  $areas = Area::getInstance()->getAll();
-}
+use DAO\Area;
+use DAO\Tendencia;
+use DAO\Urgencia;
 
 $gravidadesAll = Gravidade::getInstance()->order('id')->getAll();
-$urgenciasAll  = Urgencia::getInstance()->order('id')->getAll();
+$urgenciasAll = Urgencia::getInstance()->order('id')->getAll();
 $tendenciasAll = Tendencia::getInstance()->order('id')->getAll();
-
 $urgencias = Urgencia::getInstance()->order('id', 'desc')->getAll(3);
-$melhoriasAgenda = Melhoria::getInstance()
-    ->order('prazo_legal')
-    ->order('prazo_acordado')
-    ->order('gut', 'desc')
-    ->order('id')
-    ->filtrarPorUrgencia([0,1,2,3,4], ['*', '(coalesce(gravidade, 1) * coalesce(urgencia, 1) * coalesce(tendencia, 1)) as gut']);
 
-$melhorias = [];
+$mInicial = 1;
+$mFinal = 12;
 
-foreach($melhoriasAgenda as $melhoriaAgenda) {
-
-    $prazoLegal = '';
-    if (!empty($melhoriaAgenda->prazo_legal)) {
-      list($anoPrazoLegal, $mesPrazoLegal, $diaPrazoLegal) = explode('-', $melhoriaAgenda->prazo_legal);
-      $prazoLegal = date('d/m/Y', mktime(0,0,0, $mesPrazoLegal, $diaPrazoLegal, $anoPrazoLegal));
+if (!empty($_GET['meses'])) {
+    if (strpos($_GET['meses'], '-') !== false) {
+        list($mInicial, $mFinal) = explode('-', $_GET['meses']);
+    } else {
+        $mInicial = $mFinal = $_GET['meses'];
     }
-
-    $prazoAcordado = '';
-    if (!empty($melhoriaAgenda->prazo_acordado)) {
-      list($anoPrazoAcordado, $mesPrazoAcordado, $diaPrazoAcordado) = explode('-', $melhoriaAgenda->prazo_acordado);
-      $prazoAcordado = date('d/m/Y', mktime(0,0,0, $mesPrazoAcordado, $diaPrazoAcordado, $anoPrazoAcordado));
-    }
-
-    $mesEntregaMelhoria = preg_replace('/\d{4}-(\d{2})-\d{2}/', "$1", $melhoriaAgenda->prazo_legal);
-
-    if(empty($mesEntregaMelhoria)) {
-      $mesEntregaMelhoria = preg_replace('/\d{4}-(\d{2})-\d{2}/', "$1", $melhoriaAgenda->prazo_acordado);
-    }
-    $mesEntregaMelhoria = (int)$mesEntregaMelhoria;
-
-    $melhoriaAgenda->title      = preg_replace('/([^ ]+ +[^ ]+ +[^ ]+ +).*/', "$1", $melhoriaAgenda->tarefa);
-    $melhoriaAgenda->entrega_em = $mesEntregaMelhoria;
-    $melhoriaAgenda->prazoLegal    = $prazoLegal;
-    $melhoriaAgenda->prazoAcordado = $prazoAcordado;
-
-    $melhorias[$melhoriaAgenda->area][$mesEntregaMelhoria][$melhoriaAgenda->urgencia][] = $melhoriaAgenda;
 }
+
+if (!empty($_GET['area'])) {
+    $areas[] = Area::getInstance()->filtrarPorId($_GET['area']);
+} else {
+    $areas = Area::getInstance()->getAll();
+}
+
+$deleteMelhoria = new Melhoria;
+$deleteMelhoria = array_key_exists("id", $_GET) ? $deleteMelhoria->excluirTarefa($_GET['id']) : null;
+
+$melhorias = melhoriaNegocio();
+
 ?>
 <div class="container-fluid">
 <table class="table table-striped">
@@ -92,8 +61,7 @@ foreach($melhoriasAgenda as $melhoriaAgenda) {
                     <?php if(!empty($melhoriasEncontradas)) : ?>
                       <?php foreach($melhoriasEncontradas as $melhoria) : ?>
                                 <td class="table-<?php echo $urgencia->id == 5 ? 'primary' : ($urgencia->id == 4 ? 'danger' : 'warning' ) ; ?>">
-
-                                  <div class="wrapper-melhoria" id="wrapper_melhoria_<?php echo "{$area->id}_{$m}_{$melhoria->id}" ?>">
+                                  <div class="wrapper-melhoria" id="wrapper_melhoria_<?php echo "{$area->id}_{$m}_{$melhoria->id}_{$urgencia->id}" ?>">
                                     <div class="card" style="width: 18rem;">
                                       <div class="card-body">
                                         <h5 class="card-title"><?php echo $melhoria->title; ?></h5>
@@ -123,11 +91,11 @@ foreach($melhoriasAgenda as $melhoriaAgenda) {
                                               <div class="form-group form-row">
                                                 <div class="col">
                                                   <label  for="prazo_legal">Prazo legal</label>
-                                                  <input type="text" class="form-control mb-2" id="prazo_legal" placeholder="Prazo legal" readonly value="<?php echo $prazoLegal ?>">
+                                                  <input type="text" class="form-control mb-2" id="prazo_legal" placeholder="Prazo legal" readonly value="<?php echo $melhoria->prazoLegal ?>">
                                                 </div>
                                                 <div class="col">
                                                   <label for="prazo_acordado">Prazo acordado</label>
-                                                  <input type="text" class="form-control" id="prazo_acordado" placeholder="Prazo acordado" readonly value="<?php echo $prazoAcordado ?>">
+                                                  <input type="text" class="form-control" id="prazo_acordado" placeholder="Prazo acordado" readonly value="<?php echo $melhoria->prazoAcordado ?>">
                                                 </div>
                                                   </div>
                                               <div class="form-group form-row">
@@ -172,6 +140,8 @@ foreach($melhoriasAgenda as $melhoriaAgenda) {
                                           </div>
                                           <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                              <a href="?path=agenda&id=<?= $melhoria->id ?>" class="text-light btn btn-danger" onclick="return confirm('Deseja mesmo excluir?')">Excluir</a>
+                                              <a href="?path=/areas/alteraTarefa&id=<?= $melhoria->id ?>" class="text-light btn btn-warning">Alterar</a>
                                           </div>
                                         </div>
                                       </div>

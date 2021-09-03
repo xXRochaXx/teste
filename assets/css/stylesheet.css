@@ -47,3 +47,9 @@ div#agenda form > button#btn_buscar {
     margin: 0 auto;
     display: block;
 }
+
+#edit_area{
+    display: inline-block;
+    margin-left: 500px;
+}
+

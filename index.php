@@ -6,14 +6,13 @@ ini_set('display_errors', 'on');
 if(!file_exists('vendor/autoload.php')) {
     die('Instale as dependencias');
 }
-
 require_once 'vendor/autoload.php';
 
 if(empty($_GET)) {
     header('Location: ?path=inicio');
 }
-?>
 
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,20 +36,20 @@ if(empty($_GET)) {
   <div class="collapse navbar-collapse" id="navbarsExample01">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item">
-        <a class="nav-link" href="#">Áreas</a>
+        <a class="nav-link" href="?path=areas/index">Áreas</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Tarefas</a>
+        <a class="nav-link" href="?path=agenda&meses=1-12">Tarefas</a>
       </li>
     </ul>
   </div>
 </nav>
 <div class="position-relative" style="margin-top: 20px">
-    <?php
-        if(!empty($_GET['path'])) {
-            require_once ('views/'. $_GET['path'] . '.php');
-        }
-    ?>
+
+<?php
+include 'rotas.php';
+?>
+
 </div>
 </body>
 </html> 

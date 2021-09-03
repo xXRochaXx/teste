@@ -1,9 +1,10 @@
-<?php 
+<?php
 
 namespace DAO;
 
-class Database {
-    
+class Database
+{
+
     protected $db;
     protected $order = [];
 
@@ -16,13 +17,14 @@ class Database {
      * @var Class
      * @access protected
      */
-    protected static  $oInstance;
+    protected static $oInstance;
 
-    public function __construct ($dbname = 'melhorias', $host = 'dbsellerdb', $port = '5432', $user = 'postgres', $pass = '') 
+    public function __construct($dbname = 'melhorias', $host = 'localhost', $port = '5432', $user = 'postgres', $pass = '7945213')
     {
         $dsn = "pgsql:dbname={$dbname};host={$host};port={$port}";
-        
+
         $this->db = new \PDO($dsn, $user, $pass);
+
     }
 
     /**
@@ -43,7 +45,7 @@ class Database {
     {
         $fields = $this->prepareFields($fields);
 
-        $dbst = $this->db->prepare(" SELECT $fields FROM ". static::TABLE ." WHERE id = :id ");
+        $dbst = $this->db->prepare(" SELECT $fields FROM " . static::TABLE . " WHERE id = :id ");
         $dbst->bindValue(':id', $id, \PDO::PARAM_STR);
 
         return $this->execute($dbst);
@@ -52,22 +54,22 @@ class Database {
     public function filtrarPorDescricao($descricao, $fields = null)
     {
         $fields = $this->prepareFields($fields);
-        
-        $dbst = $this->db->prepare(" SELECT $fields FROM ". static::TABLE ." WHERE descricao ILIKE :descricao ");
+
+        $dbst = $this->db->prepare(" SELECT $fields FROM " . static::TABLE . " WHERE descricao ILIKE :descricao ");
         $dbst->bindValue(':descricao', $descricao, \PDO::PARAM_STR);
 
         return $this->execute($dbst);
     }
 
-    protected function filtrar ($where, $whereValues, $fields = null)
+    protected function filtrar($where, $whereValues, $fields = null)
     {
         $fields = $this->prepareFields($fields);
 
         $order = null;
-        if(!empty($this->order)) {
+        if (!empty($this->order)) {
 
             $ords = [];
-            foreach($this->order as $ord => $dir) {
+            foreach ($this->order as $ord => $dir) {
 
                 $ords[] = "{$ord} {$dir}";
             }
@@ -75,16 +77,16 @@ class Database {
             $order = ' ORDER BY ' . implode(',', $ords);
         }
 
-        $dbst   = $this->db->prepare(" SELECT {$fields} FROM ". static::TABLE ." WHERE {$where} {$order} ");
+        $dbst = $this->db->prepare(" SELECT {$fields} FROM " . static::TABLE . " WHERE {$where} {$order} ");
 
-        if(is_array($whereValues) && !empty($whereValues)) {
+        if (is_array($whereValues) && !empty($whereValues)) {
 
             foreach ($whereValues as $param => $value) {
 
-                if(strpos($value, ',') === false) {
+                if (strpos($value, ',') === false) {
                     $typeParam = is_int($value) ? \PDO::PARAM_INT : \PDO::PARAM_STR;
-                    $dbst->bindValue(':'. $param, $value, $typeParam);
-                } 
+                    $dbst->bindValue(':' . $param, $value, $typeParam);
+                }
             }
         }
 
@@ -93,15 +95,15 @@ class Database {
 
     public function getAll($limit = null)
     {
-        if(!empty($limit)) {
+        if (!empty($limit)) {
             $limit = ' LIMIT ' . (int)$limit;
         }
-        
+
         $order = null;
-        if(!empty($this->order)) {
+        if (!empty($this->order)) {
 
             $ords = [];
-            foreach($this->order as $ord => $dir) {
+            foreach ($this->order as $ord => $dir) {
 
                 $ords[] = "{$ord} {$dir}";
             }
@@ -111,12 +113,12 @@ class Database {
 
         $fields = $this->prepareFields();
 
-        return $this->execute($this->db->prepare(" SELECT $fields FROM " . static::TABLE ." {$order} {$limit} "));
+        return $this->execute($this->db->prepare(" SELECT $fields FROM " . static::TABLE . " {$order} {$limit} "));
     }
 
     public function order($column, $direction = 'ASC')
     {
-        if(!empty($column) && !empty($direction)) {
+        if (!empty($column) && !empty($direction)) {
             $this->order[$column] = $direction;
         }
 
@@ -127,33 +129,33 @@ class Database {
     {
         $results = $dbst->execute();
 
-        if($results === false) {
-            throw new \Exception("Não foi possível executar a consulta\n". implode("\n", $dbst->errorInfo()));
+        if ($results === false) {
+            throw new \Exception("Não foi possível executar a consulta\n" . implode("\n", $dbst->errorInfo()));
         }
 
-        if($dbst->rowCount() == 0) {
+        if ($dbst->rowCount() == 0) {
             return null;
         }
 
-        if($dbst->rowCount() == 1) {
+        if ($dbst->rowCount() == 1) {
             return $dbst->fetchObject();
         }
 
         $res = [];
         while ($row = $dbst->fetch(\PDO::FETCH_ASSOC, \PDO::FETCH_ORI_NEXT)) {
             $res[] = (object)$row;
-        } 
+        }
 
         return $res;
     }
 
     protected function prepareFields($fields = null)
     {
-        if(empty($fields)) {
+        if (empty($fields)) {
             $fields = '*';
         } else {
 
-            if(is_array($fields)) {
+            if (is_array($fields)) {
                 $fields = implode(', ', $fields);
             }
         }
@@ -161,8 +163,9 @@ class Database {
         return $fields;
     }
 
-    
-    public function __destruct () 
+    public function __destruct()
     {
     }
+
+
 }

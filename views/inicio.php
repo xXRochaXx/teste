@@ -24,7 +24,12 @@ for($m = 1; $m <= 12; $m++) {
           <option value="<?php echo $area->id; ?>"><?php echo $area->descricao; ?></option>
         <?php endforeach; ?>
         </select>
-        <small id="areaHelp" class="form-text text-muted">Area de negócio da tarefa.</small>
+          <div class="d-flex bd-highlight">
+              <small id="areaHelp" class="p-1 bd-highlight">Area de negócio da tarefa.</small>
+              <div class="p-2 flex-grow-1 bd-highlight"></div>
+              <div class="p-2 bd-highlight"><a href="?path=areas" class="btn btn-primary btn-sm">Editar Áreas</a></div>
+          </div>
+
       </div>
     </div>
     <div class="form-row">
@@ -38,7 +43,7 @@ for($m = 1; $m <= 12; $m++) {
         </select>
       </div>
       <div class="form-group col-sm-12 col-md-2">
-        <div>&nbsp;</div>
+          <div>&nbsp;</div>
         <div class="separador-texto-combos">à</div>
       </div>
       <div class="form-group col-sm-12 col-md-5">
@@ -51,16 +56,20 @@ for($m = 1; $m <= 12; $m++) {
         </select>
       </div>
     </div>
-    <button type="button" id="btn_buscar" class="btn btn-primary">Buscar</button>
+      <div class="d-flex justify-content-center">
+          <button type="button" id="btn_buscar" class="btn btn-primary mr-1" >Buscar</button>
+          <a href="?path=/areas/novaTarefa" class="btn btn-primary">Criar Tarefa</a>
+      </div>
   </form>
 </div>
 <script type="text/javascript">
-  document.querySelector('#btn_buscar').addEventListener('click', function(ev) {
 
+  document.querySelector('#btn_buscar').addEventListener('click', function(ev) {
+    var mesInicio = 1;
+    var mesFinal = 12;
     var form        = document.querySelector('form');
     var fields      = form.elements;
     var qryString   = '?path=agenda';
-    var filtroMeses = [];
 
     for(let field of fields) {
 
@@ -68,7 +77,6 @@ for($m = 1; $m <= 12; $m++) {
 
         switch(field.id) {
           case 'area':
-
             qryString += '&';
             qryString += field.id;
             qryString += '=';
@@ -76,18 +84,20 @@ for($m = 1; $m <= 12; $m++) {
             break;
 
           case 'mes_inicio':
+              mesInicio = field.value;
+              break;
           case 'mes_fim':
-            filtroMeses.push(field.value);
-            break;
+              mesFinal = field.value;
+              break;
         }
       }
     }
-
-    if(filtroMeses.length > 0) {
-      qryString += '&meses='
-      qryString += filtroMeses.join('-');
+    if(mesInicio <= mesFinal) {
+      qryString += `&meses=${mesInicio}-${mesFinal}`;
+      location.href = qryString;
+    } else {
+        alert("Mes inicial está maior que o mes final!");
     }
-
-    location.href = qryString;
+      console.log(qryString);
   })
 </script>

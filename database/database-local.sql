@@ -45,7 +45,6 @@ ALTER TABLE melhorias ADD CONSTRAINT melhoria_tendencia_fk FOREIGN KEY (tendenci
 ALTER TABLE melhorias ADD CONSTRAINT melhoria_area_fk FOREIGN KEY (area) references area (id);
 
 
-
 INSERT INTO area (descricao) VALUES 
      ('Configurações')
     ,('Educação')
@@ -56,7 +55,7 @@ INSERT INTO area (descricao) VALUES
     ,('Folha')
 ;
 
-INSERT INTO melhorias (area, descricao, prazo_acordado, prazo_legal, demanda_legal, gravidade, urgencia, tendencia) VALUES 
+INSERT INTO melhorias (area, descricao, prazo_acordado, prazo_legal, demanda_legal, gravidade, urgencia, tendencia) VALUES
     ((SELECT id FROM area WHERE descricao ilike 'Tributário'),     'A equipe de suporte precisa saber que o deploy automatizado no Heroku facilitou a resolução de conflito da execução parelela de funções em multi-threads.', '2019-12-31', null,         'f', null, 1, null),
     ((SELECT id FROM area WHERE descricao ilike 'Tributário'),     'Nesse pull request, um erro não identificado otimizou a renderização na organização alfanumérico dos arrays multidimensionais', '2019-04-30', null,         'f', null, 5, null),
     ((SELECT id FROM area WHERE descricao ilike 'Tributário'),     'Desde ontem a noite o gerenciador de dependências do frontend corrigiu o bug da execução parelela de funções em multi-threads.', '2019-05-31', null,         'f', null, 5, null),
@@ -91,7 +90,8 @@ INSERT INTO melhorias (area, descricao, prazo_acordado, prazo_legal, demanda_leg
     ((SELECT id FROM area WHERE descricao ilike 'Configurações'),  'Nesse pull request, o módulo de recursão paralela facilitou a resolução de conflito de uma compilação com tempo acima da media.', null,         '2019-06-30', 'f', null, 1, null),
     ((SELECT id FROM area WHERE descricao ilike 'Configurações'),  'Explica pro Product Onwer que a normalização da data otimizou a renderização no fechamento automático das tags.', '2019-05-02', null,         'f', null, 1, null),
     ((SELECT id FROM area WHERE descricao ilike 'Configurações'),  'Fala pro cliente que a normalização da data otimizou a renderização da execução parelela de funções em multi-threads.', '2019-05-30', null,         'f', null, 5, null),
-    ((SELECT id FROM area WHERE descricao ilike 'Configurações'),  'A equipe de suporte precisa saber que a compilação final do programa complexificou o merge no fechamento automático das tags.', '2019-05-31', null,         'f', null, 5, null)
+    ((SELECT id FROM area WHERE descricao ilike 'Configurações'),  'A equipe de suporte precisa saber que a compilação final do programa complexificou o merge no fechamento automático das tags.', '2019-05-31', null,         'f', null, 5, null),
+    ((SELECT id FROM area WHERE descricao ilike 'Configurações'),  'A dona aranha subiu pela parede veio a chuva forte e a derrubou', '2019-05-31', null,         'f', null, 5, null)
 ;
 
 
